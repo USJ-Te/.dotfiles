@@ -1,0 +1,75 @@
+![color]
+
+! DWM Color
+! 
+dwm.normfgcolor:#D4BE98
+dwm.normbgcolor:#282828
+dwm.normbordercolor:#504945
+dwm.normfloatcolor:#282828
+
+dwm.selfgcolor:#282828
+dwm.selbgcolor:#EA6962
+dwm.selbordercolor:#282828
+dwm.selfloatcolor:#282828
+
+dwm.titlenormfgcolor:#D4BE98
+dwm.titlenormbgcolor:#282828
+dwm.titlenormbordercolor:#bdae93
+dwm.titlenormfloatcolor:#282828
+
+dwm.titleselfgcolor:#282828
+dwm.titleselbgcolor:#EA6962
+dwm.titleselbordercolor:#282828
+dwm.titleselfloatcolor:#EA6962
+
+dwm.tagsnormfgcolor:#D4BE98
+dwm.tagsnormbgcolor:#282828
+dwm.tagsnormbordercolor:#bdae93
+dwm.tagsnormfloatcolor:#b4730e
+
+dwm.tagsselfgcolor:#282828
+dwm.tagsselbgcolor:#EA6962
+dwm.tagsselbordercolor:#bdae93
+dwm.tagsselfloatcolor:#EA6962
+
+dwm.hidnormfgcolor:#504945
+dwm.hidselfgcolor:#D8A657
+dwm.hidnormbgcolor:#282828
+dwm.hidselbgcolor:#282828
+
+dwm.urgfgcolor:#282828
+dwm.urgbgcolor:#EA6962
+dwm.urgbordercolor:#EA6962
+dwm.urgfloatcolor:#EA6962
+
+! TOP_TO_BOTTOM
+dwm.normTTBbgcolor:#282828
+dwm.actTTBbgcolor:#282828
+dwm.selTTBbgcolor:#ea6962
+
+! LEFT_TO_RIGHT 
+dwm.normLTRbgcolor:#282828
+dwm.actLTRbgcolor:#282828
+dwm.selLTRbgcolor:#ea6962
+
+! GAPPLESSGRID
+dwm.normGRIDbgcolor:#282828
+dwm.actGRIDbgcolor:#282828
+dwm.selGRIDbgcolor:#ea6962
+
+! GAPPLESSGRID_ALT1
+dwm.normGRD1bgcolor:#282828
+dwm.actGRD1bgcolor:#282828
+dwm.selGRD1bgcolor:#ea6962
+
+! GAPPLESSGRID_ALT2
+dwm.normGRD2bgcolor:#282828
+dwm.actGRD2bgcolor:#282828
+dwm.selGRD2bgcolor:#ea6962
+
+! float
+dwm.normfloatbgcolor:#282828
+dwm.actfloatbgcolor:#282828
+dwm.selfloatbgcolor:#ae5858
+
+

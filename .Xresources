@@ -1,0 +1,13 @@
+#include ".Xresources.d/colors"
+#include ".Xresources.d/dwm.xresources"
+#include ".Xresources.d/rxvt-unicode"
+#include ".Xresources.d/st.xresources"
+#include ".Xresources.d/themes/Gruvbox-Material-Dark-Hard-256"
+
+!#include ".Xresources.d/one.xresources"
+!#include ".Xresources.d/fonts"
+
+!#include ".Xresources.d/xft.xresources"
+!#include ".Xresources.d/themes/iterm-ayu.Xresources"
+
+st.font: JetBrains Mono:style=Regular:pixelsize=15:antialias=true:autohint=true;
