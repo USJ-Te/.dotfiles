@@ -1,0 +1,170 @@
+#!/bin/sh -e
+#  _____ _        _             _
+# /  ___| |      | |           | |
+# \ `--.| |_ __ _| |_ _   _ ___| |__   __ _ _ __
+#  `--. | __/ _` | __| | | / __| '_ \ / _` | '__|
+# /\__/ | || (_| | |_| |_| \__ | |_) | (_| | |
+# \____/ \__\__,_|\__|\__,_|___|_.__/ \__,_|_|
+#
+# MODDWM STATUSBAR - Modular Dynamic Window Manager Statusbar Gruvbox Flavour.
+# ----------------------------------------------------------------------------
+#  "THE BEER-WARE LICENSE" (Revision 42):
+#  Plasmoduck <plasmoduck@gmail.com> wrote this file.  As long as you retain this notice you
+#  can do whatever you want with this stuff. If we meet some day, and you think
+#  this stuff is worth it, you can buy me a beer in return - Plasmoduck.
+# ---------------------------------------------------------------------------- 
+# Terminate already running bar instances
+#killall -q dwmstatusbar
+# Wait until the processes have been shut down
+#while pgrep -u $UID -x dwmstatusbar >/dev/null; do sleep 1; done
+
+print_time (){
+	date "+%I:%M:%S %p" 
+}
+
+print_date (){
+	date "+%a, %d %b %Y"
+}
+
+get_load(){
+  # Get the first line with aggregate of all CPUs
+  cpu_last=($(head -n1 /proc/stat))
+  cpu_last_sum="${cpu_last[@]:1}"
+  cpu_last_sum=$((${cpu_last_sum// /+}))
+
+  sleep 0.5
+
+  cpu_now=($(head -n1 /proc/stat))
+  cpu_sum="${cpu_now[@]:1}"
+  cpu_sum=$((${cpu_sum// /+}))
+
+  cpu_delta=$((cpu_sum - cpu_last_sum))
+  cpu_idle=$((cpu_now[4]- cpu_last[4]))
+  cpu_used=$((cpu_delta - cpu_idle))
+  cpu_usage=$((100 * cpu_used / cpu_delta))
+
+  # Keep this as last for our next read
+  cpu_last=("${cpu_now[@]}")
+  cpu_last_sum=$cpu_sum
+
+  echo "$cpu_usage%"
+}
+
+get_temp() {
+  local _temp
+  local f=$(find /sys/class/thermal -maxdepth 1 -name 'thermal_zone*' | sort -r | head -n 1)
+  read _temp < "${f}/temp"
+  _temp=$((_temp / 1000))
+  ret=$_temp
+  temp=$_temp
+  echo "$temp"
+}
+
+cpu_temp() {
+	i=2
+	max=0
+	while [ -f "/sys/class/thermal/thermal_zone$i/temp" ]; do
+		if [ "$(sed 's/[0-9][0-9][0-9]$//' "/sys/class/thermal/thermal_zone$i/temp")" -gt "$max" ]; then
+			max="$(sed 's/[0-9][0-9][0-9]$//' "/sys/class/thermal/thermal_zone$i/temp")"
+		fi
+		i=$((i+1))
+	done
+	echo $max°C
+}
+
+
+get_uptime()
+{
+    UPTIME=$(uptime --pretty | sed 's/up //' | sed 's/\ years\?,/y/' | sed 's/\ weeks\?,/w/' | sed 's/\ days\?,/d/' | sed 's/\ hours\?,\?/h/' | sed 's/\ minutes\?/m/')
+    echo "$UPTIME"
+}
+
+get_disk()
+{
+    TOTAL_SIZE=$( df -h / | tail -1 | awk {'printf $2'})
+    USED_SIZE=$(df -h / | tail -1 | awk {'printf $3'})
+    PERCENTAGE=$(df -h / | tail -1 | awk {'printf $5'})
+
+    echo "$USED_SIZE/$TOTAL_SIZE ($PERCENTAGE)"
+}
+
+
+get_ram()
+{
+    TOTAL_RAM=$(free -mh --si | awk  {'print $2'} | head -n 2 | tail -1)
+    USED_RAM=$(free -mh --si | awk  {'print $3'} | head -n 2 | tail -1)
+    MB="MB"
+
+    echo "$USED_RAM/$TOTAL_RAM"
+}
+
+get_kernel()
+{
+	KERNEL=$(uname -sr)
+	echo "$KERNEL"
+}
+
+get_weather_icons()
+{
+	ICONS=$(cat ~/.local/share/weather_icons)
+	echo "$ICONS"
+}
+
+get_weather_decs()
+{
+	DECS=$(cat ~/.local/share/weather_decs)
+	echo "$DECS"
+}
+
+weather_icon() {
+        ICONS=$(curl -s 'wttr.in/{Subang+Jaya}?format=1' | grep -oP "[^\x00-\x7F]")
+        echo "$ICONS"
+}
+
+
+weather_temp() {
+        TEMP=$(curl -s 'wttr.in/{Subang+Jaya}?format=%c')
+        echo "$TEMP"
+}
+
+get_weather() {
+	if [[ ! -e ~/.cache/weather.txt ]]; then
+		touch ~/.cache/weather.txt
+	fi
+	find ~/.cache/weather.txt '!' -newermt '-30 minutes' -exec curl -s -o '{}' 'wttr.in/Subang+Jaya?format=1' ';'
+		read _weathericon _weather < ~/.cache/weather.txt
+		_weather=${_weather#+}
+        case "$_weathericon" in
+		*⛅*)
+		_color="83A598"
+		;;
+		*🌦*)
+        _color="83A598"
+        ;;
+        *🌩*)
+		_color="FB4934"
+        ;;
+        *⛈*)
+        _color="FB4934"
+        ;;
+        *☀*)
+        _color="FABD2F"
+        ;;
+        *☁️*)
+        _color="837967"
+        ;;
+        *)
+		_color="D5C4A1"
+		;;
+	esac
+	printf '^C1^%s %s %s' "$_color" "$_weathericon" "${_weather%C}"
+	sleep 300s       
+}
+
+
+while true; do
+    xsetroot -name "^b#282828^ ^C1^󰘚^C15^$(get_load)^C12^󰅂^C2^󰡴^C15^$(get_ram)^C12^󰅂^C3^󰋊^C15^$(get_disk)^C12^󰅂^C4^󰔟^C15^$(get_uptime)^C12^󰅂^C5^󰔏^C15^$(get_temp)"
+    sleep 1s
+done
+
+#^C1^$(get_weather_icons) ^C12^󰅂

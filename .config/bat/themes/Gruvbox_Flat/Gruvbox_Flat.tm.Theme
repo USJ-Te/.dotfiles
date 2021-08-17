@@ -1,0 +1,12 @@
+--2021-08-17 17:46:42--  https://raw.githubusercontent.com/eddyekofo94/gruvbox-flat.nvim/master/extras/Gruvbox%20Flat%20Dark.tmTheme
+Loaded CA certificate '/etc/ssl/certs/ca-certificates.crt'
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.110.133, 185.199.111.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.110.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6624 (6.5K) [text/plain]
+Saving to: ‘Gruvbox Flat Dark.tmTheme’
+
+     0K ......                                                100% 28.3M=0s
+
+2021-08-17 17:46:43 (28.3 MB/s) - ‘Gruvbox Flat Dark.tmTheme’ saved [6624/6624]
+
