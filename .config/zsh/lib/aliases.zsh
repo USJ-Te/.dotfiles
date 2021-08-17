@@ -104,4 +104,4 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages
 alias dd='dd status=progress'
 alias diff='diff --color=auto'
 #alias config='/usr/bin/git --git-dir=/home/fewcm/.cfg/ --work-tree=/home/fewcm'
-alias dotfiles='/usr/bin/git --git-dir=/home/fewcm/.cfg/ --work-tree=/home/fewcm'
+alias dotfiles='/usr/bin/git --git-dir=/home/fewcm/.dotfiles/ --work-tree=/home/fewcm'
